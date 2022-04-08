@@ -2,58 +2,29 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const patients = require("./routes/patients");
+const doctors = require("./routes/doctors");
+const appointments = require("./routes/appointments");
 
+const db = require('./db')
+const initdb = require('./initdb')
+initdb(db)
+
+const PORT = process.env.PORT || 5000
 const app = express();
+
+app.use(express.json());
 app.use(cors());
 app.use(bodyParser.json());
 
-// Postgres Client Setup
-const { Pool } = require('pg');
-const pgClient = new Pool({
-  user: process.env.POSTGRES_USER,
-  host: process.env.PG_HOST,
-  database: process.env.POSTGRES_DB,
-  password: process.env.POSTGRES_PASSWORD,
-  port: process.env.PG_PORT
-});
-
-pgClient.on('error', () => console.log('Lost PG connection'));
-
-pgClient
-  .query('CREATE TABLE IF NOT EXISTS doctors (id SERIAL PRIMARY INT, name VARCHAR(50) NOT NULL)')
-  .catch(err => console.log(err));
-
-pgClient
-  .query('CREATE TABLE IF NOT EXISTS patients (id SERIAL PRIMARY INT, name VARCHAR(50) NOT NULL)')
-  .catch(err => console.log(err));
-pgClient
-
-  .query('CREATE TABLE IF NOT EXISTS appointments (id SERIAL PRIMARY INT, doctor_id INT NOT NULL, patient_id INT NOT NULL, datetime timestamp NOT NULL)')
-  .catch(err => console.log(err));
-// Express route handlers
+app.use("/patients", patients);
+app.use("/doctors", doctors);
+app.use("/appointments", appointments);
 
 app.get('/', (req, res) => {
-  res.send("hi");
+  res.send("hi there");
 });
 
-app.get('/values/all', async (req, res) => {
-  const values = await pgClient.query('SELECT * from patients');
-
-  res.send(values.rows);
+app.listen(PORT, err => {
+  console.log(`Listening at port: ${PORT}`);
 });
-
-app.post('/values', async (req, res) => {
-  const name = req.body.name;
-
-  pgClient.query('INSERT INTO doctors(name) VALUES($1)', [name]);
-
-  res.send({ working: true });
-});
-
-app.listen(5000, err => {
-  console.log('Listening at port: ' + "5000");
-});
-
-
-
-

@@ -1,6 +1,7 @@
-import React from "react";
+import _ from 'lodash'
+import React, { useEffect } from "react";
 import { connect } from 'react-redux';
-import { signIn } from '../actions';
+import { signIn, fetchAllUsers, authDoctor} from '../actions';
 
 import { Form, Field } from "react-final-form";
 import { FORM_ERROR } from "final-form";
@@ -8,19 +9,30 @@ import { FORM_ERROR } from "final-form";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
-const Login = ({ patients, doctors, signIn }) => {
+const Login = ({ patients, doctors, signIn, fetchAllUsers, authDoctor }) => {
+  
+  // On initial render, fetch all doctors and patients from database
+  useEffect(() => {
+    fetchAllUsers()
+  }, [])
 
   let navigate = useNavigate();
   const onSubmit = (values) => {
-    const allUsers = {...patients,...doctors}
+    let allUsers = _.keyBy([...doctors, ...patients], 'id')
+    console.log(allUsers)
 
     if (!(values.userId in allUsers)) {
       return { userId: "Unknown user ID" };
     }
-    if (values.userName !== allUsers[values.userId]) {
+    console.log(allUsers[values.userId].name)
+    if (values.userName !== allUsers[values.userId].name) {
       return { [FORM_ERROR]: "Wrong name" };
     }
-    
+
+    // If user is in doctor table, set isDoctor to true
+    if (_.find(doctors, { id: values.userId })) {
+      authDoctor()
+    }
     signIn(values.userId, values.userName)
     navigate("/main");
   };
@@ -34,7 +46,7 @@ const Login = ({ patients, doctors, signIn }) => {
       errors.userName = "Required";
     }
     return errors;
-    
+
   };
   return (
     <div id="login-container" className="ui middle aligned center aligned grid">
@@ -110,6 +122,8 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps, {
-    signIn
-  }
+  signIn,
+  fetchAllUsers,
+  authDoctor
+}
 )(Login);

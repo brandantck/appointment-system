@@ -1,18 +1,15 @@
 import _ from 'lodash'
 
-// import {
-//   ADD_APPOINTMENT
-// } from "../actions/types";
+import {
+  FETCH_DOCTORS
+} from "../actions/types"
 
-const INITIAL_STATE = {
-  "D1": "D1NAME",
-  "D2": "D1NAME",
-}
-
-const doctorReducer = (state=INITIAL_STATE, action) => {
+const doctorReducer = (state=[], action) => {
   switch (action.type) {
+    case FETCH_DOCTORS:
+      return [...state, ...action.payload]
     default:
-      return {...state}
+      return state
   }
 }
 
