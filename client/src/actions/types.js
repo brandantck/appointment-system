@@ -1,7 +1,15 @@
 export const SIGN_IN = "SIGN_IN";
 export const SIGN_OUT = "SIGN_OUT";
+export const AUTH_DOCTOR = "AUTH_DOCTOR";
 
 export const INCREMENT = "INCREMENT";
 export const DECREMENT = "DECREMENT";
 
+
+export const FETCH_DOCTORS = "FETCH_DOCTORS";
+export const FETCH_PATIENTS = "FETCH_PATIENTS";
+
+
 export const ADD_APPOINTMENT = "ADD_APPOINTMENT";
+export const FETCH_APPOINTMENTS = "FETCH_APPOINTMENTS";
+export const CANCEL_APPOINTMENT = "CANCEL_APPOINTMENT";

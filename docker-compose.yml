@@ -11,7 +11,7 @@ services:
     ports:
       - "5432:5432"
 
-  api:
+  server:
     depends_on:
       - postgres
     build:
@@ -30,15 +30,13 @@ services:
     ports:
      - "5000:5000"
 
-  # client:
-  #   build:
-  #     dockerfile: Dockerfile
-  #     context: ./client
-  #   volumes:
-  #     - /app/node_modules
-  #     - ./client:/app
-  #   environment:
-  #     - CHOKIDAR_USEPOLLING=true
-  #   ports:
-  #    - "3000:3000"
-  #   stdin_open: true
+  client:
+    build:
+      dockerfile: Dockerfile
+      context: ./client
+    volumes:
+      - /app/node_modules
+      - ./client:/app
+    ports:
+     - "3000:3000"
+    stdin_open: true

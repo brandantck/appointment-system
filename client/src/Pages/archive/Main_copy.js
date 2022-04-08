@@ -27,32 +27,24 @@ const Main = ({
     }
   }, [])
 
-
+  
   const renderAppointments = appointments.map((appointment) => {
     return <Appointment {...appointment} />;
   });
 
   return (
     <>
-      <h1 className="ui center teal aligned header">Appointment Booking System</h1>
+      <h1 className="ui center aligned header">Main</h1>
       <div className="row">
         <div className="eight wide column">
-          <h2 className="ui dividing header">Welcome {userName}!</h2>
-          <div className="ui container">
-            <div className="ui grid ">
-              <div className="left floated four wide column">
-                <h1 className="ui header">Appointments </h1>
-              </div>
-              <div className="right floated four wide column">
-                <button class="ui button primary right floated">Fix Appointment</button>
-              </div>
+          <div className="ui dividing header">Welcome {userName}!</div>
+          <button class="ui button green right floated center aligned"></button>
+          {/* <div className="ui two column grid"></div> */}
+          <div className="ui center aligned header">Appointments </div>
+          <div className="row">
+            <div className="ui container">
+              <div className="ui relaxed divided items">{renderAppointments}</div>
             </div>
-            {appointments.length == 0 && 
-            <div className="ui segment yellow inverted">
-              <h3 className="ui center aligned header">You have no appointments</h3>
-            </div>
-            }
-            <div className="ui relaxed divided items">{renderAppointments}</div>
           </div>
         </div>
       </div>
