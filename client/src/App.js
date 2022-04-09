@@ -7,9 +7,11 @@ import Appointment from "./components/Appointment";
 import AppointmentFix from "./components/AppointmentFix";
 import Header from "./components/Header";
 
+import "./App.css";
+
 const App = () => {
   return (
-    <div className="ui container">
+    <div className="app-container ui container">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />

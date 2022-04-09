@@ -21,23 +21,33 @@ const Appointment = ({
   const name = isDoctor ? (_.find(patients, { id: patient_id })).name : (_.find(doctors, { id: doctor_id })).name
 
   return (
-    <div className="ui teal secondary segment">
-      <div className="item">
-        <AppointmentCancel doctor_id={doctor_id} patient_id={patient_id} date={date} time={time} />
-        <div className="content">
-          <h3 className="ui teal header"> ApptID: {id}</h3>
-          <div>
-            <span className="ui grey header">Date and time: {date}, {time}</span>
+    <div className="ui teal raised secondary segment">
+      <div className="ui grid two column">
+        <div className="column twelve wide">
+          <div className="content">
+            <h3 className="ui teal header"> ApptID: {id}</h3>
+            <div>
+              <span className="ui grey header">Date and time: {date}, {time}</span>
+            </div>
+            <div>
+              <h5 className="ui header">
+                Appointment with {name}
+                {isDoctor &&
+                  <div>
+                    Age: {patientDetails.age} | Gender: {patientDetails.gender}
+                  </div>
+                }
+              </h5>
+            </div>
           </div>
-          <div>
-            <h5 className="ui header">
-              Appointment with {name}
-              {isDoctor &&
-                <div>
-                  Age: {patientDetails.age} | Gender: {patientDetails.gender}
-                </div>
-              }
-            </h5>
+        </div>
+        <div className="column four wide">
+          <div className="ui grid">
+            <div className="row">
+              <div className="column right aligned">
+                <AppointmentCancel doctor_id={doctor_id} patient_id={patient_id} date={date} time={time} />
+              </div>
+            </div>
           </div>
         </div>
       </div>

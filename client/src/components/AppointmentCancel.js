@@ -11,6 +11,7 @@ function ModalExampleBasic({ doctor_id, patient_id, date, time, cancelAppointmen
     setOpen(false)
   }
 
+
   return (
     <Modal
       basic
@@ -18,7 +19,16 @@ function ModalExampleBasic({ doctor_id, patient_id, date, time, cancelAppointmen
       onOpen={() => setOpen(true)}
       open={open}
       size='small'
-      trigger={<Button className="ui button negative right floated">Cancel</Button>}
+      trigger={
+        <div class="ui red circular animated fade button" tabindex="0">
+        <div class="visible content">
+          Cancel
+        </div>
+        <div class="hidden content">
+          <i class="delete icon"></i>
+        </div>
+      </div>
+      }
     >
       <Header icon>
         <Icon name='delete' />
