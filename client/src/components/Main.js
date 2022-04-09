@@ -1,19 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import server from "../apis/server";
-
-import Table from "../components/Table";
 
 import { fetchPatientAppointments, fetchDoctorAppointments } from "../actions";
-import Appointment from "../components/Appointment";
+import Appointment from "../components/Appointment/Appointment";
 
 const Main = ({
-  userName,
   userId,
   isDoctor,
-  patients,
-  doctors,
   appointments,
   fetchPatientAppointments,
   fetchDoctorAppointments
@@ -79,10 +73,7 @@ const mapStateToProps = (state) => {
   return {
     isSignedIn: state.auth.isSignedIn,
     userId: state.auth.userId,
-    userName: state.auth.userName,
     isDoctor: state.auth.isDoctor,
-    patients: state.patients,
-    doctors: state.doctors,
     appointments: state.appointments,
   };
 };

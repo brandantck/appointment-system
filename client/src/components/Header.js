@@ -3,7 +3,7 @@ import {
   Outlet,
 } from 'react-router-dom';
 import { connect } from "react-redux";
-import LogoutButton from "./LogoutButton";
+import LogoutButton from "./Auth/LogoutButton";
 
 const Header = ({ userName }) => {
   return (

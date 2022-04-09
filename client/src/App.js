@@ -1,10 +1,9 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./Pages/Login";
-import Main from "./Pages/Main";
+import Login from "./components/Auth/Login";
+import Main from "./components/Main";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Appointment from "./components/Appointment";
-import AppointmentFix from "./components/AppointmentFix";
+import AppointmentFix from "./components/Appointment/AppointmentFix";
 import Header from "./components/Header";
 
 import "./App.css";
