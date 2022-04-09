@@ -1,5 +1,3 @@
-import _ from 'lodash'
-
 import {
   FETCH_PATIENTS
 } from "../actions/types"

@@ -1,16 +1,24 @@
 import _ from 'lodash'
 import React, { useEffect } from "react";
 import { connect } from 'react-redux';
-import { signIn, fetchAllUsers, authDoctor} from '../actions';
-
+import { useNavigate } from "react-router-dom";
 import { Form, Field } from "react-final-form";
 import { FORM_ERROR } from "final-form";
 
-import { useNavigate } from "react-router-dom";
+import { signIn, fetchAllUsers, authDoctor } from '../actions';
 import "./Login.css";
 
+import { toast } from 'react-toastify';
+
+// Import toastify css file
+import 'react-toastify/dist/ReactToastify.css';
+
+// toast-configuration method,
+// it is compulsory method.
+toast.configure()
+
 const Login = ({ patients, doctors, signIn, fetchAllUsers, authDoctor }) => {
-  
+
   // On initial render, fetch all doctors and patients from database
   useEffect(() => {
     fetchAllUsers()
@@ -33,7 +41,10 @@ const Login = ({ patients, doctors, signIn, fetchAllUsers, authDoctor }) => {
     if (_.find(doctors, { id: values.userId })) {
       authDoctor()
     }
+
     signIn(values.userId, values.userName)
+    toast("Login sucess",
+      { position: toast.POSITION.TOP_CENTER, autoClose: 500 });
     navigate("/main");
   };
 

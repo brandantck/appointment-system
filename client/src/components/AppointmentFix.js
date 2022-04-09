@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Form, Field, FormSpy } from "react-final-form";
 import { FORM_ERROR } from "final-form";
 import { connect } from 'react-redux';
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -11,8 +11,14 @@ import server from "../apis/server";
 
 import moment from "moment";
 
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+   
+toast.configure()
 
 const AppointmentFix = ({ userId, isDoctor, doctors, patients }) => {
+
+  const navigate = useNavigate();
 
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedDoctorId, setSelectedDoctorId] = useState("");
@@ -53,7 +59,7 @@ const AppointmentFix = ({ userId, isDoctor, doctors, patients }) => {
   }, [selectedDate, selectedDoctorId, selectedpatientId])
 
   const DatePickerAdapter = ({ input: { onChange, value }, ...rest }) => (
-    <DatePicker selected={value} onChange={date => onChange(date)} {...rest} />
+    <DatePicker selected={value} onChange={date => onChange(date)} showYearDropdown={true} scrollableYearDropdown={true} {...rest} />
     // minDate={new Date()}
   );
   const onSubmit = async (values) => {
@@ -63,11 +69,18 @@ const AppointmentFix = ({ userId, isDoctor, doctors, patients }) => {
       console.log('form error')
       return { [FORM_ERROR]: "Please fill in all the fields" };
     }
+  
     const dateStr = moment(date).format("yyyy-MM-DD")
 
     const response = await server.post("/appointments/", {
       doctor_id: doctorId, patient_id: patientId, date: dateStr, time: time
     });
+
+    if (response.status === 200) {
+      toast.info("Successfully fixed appointment",
+      { position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
+      navigate("/main")
+    }
 
     console.log(values)
     console.log(response)
