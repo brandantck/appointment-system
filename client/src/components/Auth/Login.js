@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Form, Field } from "react-final-form";
 import { FORM_ERROR } from "final-form";
 
-import { signIn, fetchAllUsers, authDoctor } from '../actions';
+import { signIn, fetchAllUsers, authDoctor } from '../../actions';
 import "./Login.css";
 
 import { toast } from 'react-toastify';

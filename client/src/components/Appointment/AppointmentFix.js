@@ -7,7 +7,7 @@ import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css";
 
 import _ from "lodash";
-import server from "../apis/server";
+import server from "../../apis/server";
 
 import moment from "moment";
 
@@ -77,30 +77,13 @@ const AppointmentFix = ({ userId, isDoctor, doctors, patients }) => {
     });
 
     if (response.status === 200) {
-      toast.info("Successfully fixed appointment",
+      toast.success("Successfully fixed appointment",
       { position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
       navigate("/main")
     }
 
     console.log(values)
     console.log(response)
-  }
-
-  const validate = (values) => {
-    const errors = {};
-    // if (!values.doctorId) {
-    //   errors.doctorId = "Required";
-    // }
-    // if (!values.patientId) {
-    //   errors.patientId = "Required";
-    // }
-    // if (!values.date) {
-    //   errors.date = "Required";
-    // }
-    if (!values.time) {
-      errors.time = "Required";
-    }
-    return errors;
   }
 
   const doctorOptions = doctors.map(doctor => {
@@ -126,7 +109,6 @@ const AppointmentFix = ({ userId, isDoctor, doctors, patients }) => {
       <h1 className="ui header">Fix a new appointment</h1>
       <Form
         onSubmit={onSubmit}
-        // validate={validate}
         initialValues={{
           patientId: isDoctor ? "P1" : userId,
           doctorId: isDoctor ? userId : "D1",

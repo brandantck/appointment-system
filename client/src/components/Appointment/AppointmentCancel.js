@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from "react-redux";
 import { Button, Header, Icon, Modal, List, Grid } from 'semantic-ui-react'
-import { cancelAppointment } from "../actions";
+import { cancelAppointment } from "../../actions";
 
 function ModalExampleBasic({ doctor_id, patient_id, date, time, cancelAppointment }) {
   const [open, setOpen] = React.useState(false)
