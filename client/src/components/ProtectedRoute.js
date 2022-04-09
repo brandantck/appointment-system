@@ -1,15 +1,15 @@
 import React from 'react';
 import {
-  Routes,
-  Route,
-  NavLink,
   Navigate,
-  useNavigate,
+  Outlet,
 } from 'react-router-dom';
 import { connect } from 'react-redux'
 
 const ProtectedRoute = ({ children, isSignedIn }) => {
-  return isSignedIn ? children : <Navigate to="/" replace />
+  if (!isSignedIn) {
+    return <Navigate to="/" replace />
+  }
+  return <Outlet />
 };
 
 const mapStateToProps = (state) => {

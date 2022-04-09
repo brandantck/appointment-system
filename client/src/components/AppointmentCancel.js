@@ -26,7 +26,7 @@ function ModalExampleBasic({ doctor_id, patient_id, date, time, cancelAppointmen
       </Header>
       <Modal.Content>
         <Grid centered>
-          <List bulleted verticalAlign>
+          <List bulleted>
             <List.Item>Doctor ID: {doctor_id}</List.Item>
             <List.Item>Patient ID: {patient_id}</List.Item>
             <List.Item>Date: {date}</List.Item>

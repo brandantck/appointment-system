@@ -24,7 +24,6 @@ const Appointment = ({
     <div className="ui teal secondary segment">
       <div className="item">
         <AppointmentCancel doctor_id={doctor_id} patient_id={patient_id} date={date} time={time} />
-        {/* <button onClick={handleDelete} className="ui button negative right floated ">Cancel</button> */}
         <div className="content">
           <h3 className="ui teal header"> ApptID: {id}</h3>
           <div>
