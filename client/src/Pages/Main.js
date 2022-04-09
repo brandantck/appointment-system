@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import server from "../apis/server";
 
 import Table from "../components/Table";
@@ -18,6 +18,8 @@ const Main = ({
   fetchPatientAppointments,
   fetchDoctorAppointments
 }) => {
+
+  const [ selectedDate, setSelectedDate ] = useState(null);
   // On initial render, fetch all appointments from database
   useEffect(() => {
     if (isDoctor) {
@@ -29,32 +31,28 @@ const Main = ({
 
 
   const renderAppointments = appointments.map((appointment) => {
-    return <Appointment {...appointment} />;
+    return <Appointment key={appointment.id} {...appointment} />;
   });
 
   return (
     <>
-      <h1 className="ui center teal aligned header">Appointment Booking System</h1>
-      <div className="row">
-        <div className="eight wide column">
-          <h2 className="ui dividing header">Welcome {userName}!</h2>
-          <div className="ui container">
-            <div className="ui grid ">
-              <div className="left floated four wide column">
-                <h1 className="ui header">Appointments </h1>
-              </div>
-              <div className="right floated four wide column">
-                <button class="ui button primary right floated">Fix Appointment</button>
-              </div>
-            </div>
-            {appointments.length == 0 && 
-            <div className="ui segment yellow inverted">
-              <h3 className="ui center aligned header">You have no appointments</h3>
-            </div>
-            }
-            <div className="ui relaxed divided items">{renderAppointments}</div>
+      <div className="ui container">
+        <div className="ui grid ">
+          <div className="left floated four wide column">
+            <h1 className="ui header">Appointments </h1>
+          </div>
+          <div className="right floated four wide column">
+            <Link to="/fix-appointment">
+              <button className="ui button primary right floated">Fix Appointment</button>
+            </Link>
           </div>
         </div>
+        {appointments.length == 0 &&
+          <div className="ui segment yellow inverted">
+            <h3 className="ui center aligned header">You have no appointments</h3>
+          </div>
+        }
+        <div className="ui relaxed divided items">{renderAppointments}</div>
       </div>
     </>
   );
