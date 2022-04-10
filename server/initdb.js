@@ -49,10 +49,12 @@ const initAppointments = async (db) => {
     await db.schema.dropTableIfExists("appointments")
     await db.schema.withSchema("public").createTable("appointments", (table) => {
       table.increments("id")
-      table.string("doctor_id")
-      table.string("patient_id")
+      table.string("doctor_id").references("id").inTable("doctors")
+      table.string("patient_id").references("id").inTable("patients")
       table.date("date")
       table.time("time")
+      table.unique(["doctor_id", "date", "time"])
+      table.unique(["patient_id", "date", "time"])
     })
     console.log("Created appointments table!")
   } catch (err) {
