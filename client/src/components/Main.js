@@ -46,11 +46,6 @@ const Main = ({
                 <i className="right arrow icon"></i>
               </div>
             </div>
-            {/* <div className="ui blue circular labeled icon button">
-              Fix Appointment
-              <i className="add icon"></i>
-            </div> */}
-            {/* <button className="ui button primary right floated"></button> */}
           </Link>
         </div>
       </div>
