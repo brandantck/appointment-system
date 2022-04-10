@@ -30,14 +30,15 @@ const Appointment = ({
               <span className="ui grey header">Date and time: {date}, {time}</span>
             </div>
             <div>
-              <h5 className="ui header">
+              <div className="ui divider"></div>
+              <span className="ui header">
                 Appointment with {name}
                 {isDoctor &&
                   <div>
                     Age: {patientDetails.age} | Gender: {patientDetails.gender}
                   </div>
                 }
-              </h5>
+              </span>
             </div>
           </div>
         </div>
@@ -55,14 +56,6 @@ const Appointment = ({
   );
 };
 
-{/* <div class="ui relaxed divided list">
-  <div class="item">
-    <div class="content">
-      <a class="header">Semantic-Org/Semantic-UI</a>
-      <div class="description">Updated 10 mins ago</div>
-    </div>
-  </div>
-</div> */}
 const mapStateToProps = (state) => {
   return {
     patients: state.patients,
@@ -73,27 +66,3 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
 })(Appointment);
-
-
-
-/*
-
-    <div className="card">
-      <div className="content">
-        <div className="header">Appt ID: {appointment_id}</div>
-        <div className="description">Date: {appointment_datetime}</div>
-      </div>
-      <div className="extra content">
-        <div className="ui two column grid">
-          <div className="column">
-            <div className="header">{doctor_id}</div>
-            <div className="meta">Doctor: {doctors[doctor_id]}</div>
-          </div>
-          <div className="column">
-            <div className="header">{patient_id}</div>
-            <div className="meta">Patient: {patients[patient_id]}</div>
-          </div>
-        </div>
-      </div>
-    </div>
-*/

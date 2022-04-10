@@ -1,21 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { fetchPatientAppointments, fetchDoctorAppointments } from "../actions";
-import Appointment from "../components/Appointment/Appointment";
+import Appointment from "./Appointment/Appointment";
+import AppointmentDateDropdown from "./Appointment/AppointmentDateDropdown";
 
 const Main = ({
   userId,
   isDoctor,
   appointments,
+
   fetchPatientAppointments,
   fetchDoctorAppointments
 }) => {
 
-  const [selectedDate, setSelectedDate] = useState(null);
   // On initial render, fetch all appointments from database
   useEffect(() => {
+    // Redux
     if (isDoctor) {
       fetchDoctorAppointments(userId)
     } else {
@@ -23,32 +25,25 @@ const Main = ({
     }
   }, [])
 
-
   const renderAppointments = appointments.map((appointment) => {
     return <Appointment key={appointment.id} {...appointment} />;
   });
-
 
   return (
     <>
       <div className="ui stackable two column grid">
         <div className="column">
           <h2 className="ui header">Your Appointments</h2>
-          <label>Filter </label>
-          <select class="ui dropdown">
-            <option value="all">Get all appointments</option>
-            <option value="1">Male</option>
-            <option value="0">Female</option>
-          </select>
+          {isDoctor && <AppointmentDateDropdown />}
         </div>
         <div className="column right aligned">
           <Link to="/fix-appointment">
-            <div class="ui blue circular animated button" tabindex="0">
-              <div class="visible content">
+            <div className="ui blue circular animated button" tabIndex="0">
+              <div className="visible content">
                 Fix Appointment
               </div>
-              <div class="hidden content">
-                <i class="right arrow icon"></i>
+              <div className="hidden content">
+                <i className="right arrow icon"></i>
               </div>
             </div>
             {/* <div className="ui blue circular labeled icon button">
@@ -71,7 +66,6 @@ const Main = ({
 
 const mapStateToProps = (state) => {
   return {
-    isSignedIn: state.auth.isSignedIn,
     userId: state.auth.userId,
     isDoctor: state.auth.isDoctor,
     appointments: state.appointments,

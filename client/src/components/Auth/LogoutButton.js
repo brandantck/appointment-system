@@ -7,12 +7,12 @@ import { signOut } from "../../actions"
 const LogoutButton = ({ signOut }) => {
   return (
     <Link to="/" onClick={signOut}>
-      <div class="ui yellow animated fade button" tabindex="0">
-        <div class="visible content">
+      <div className="ui yellow animated fade button" tabIndex="0">
+        <div className="visible content">
           Log Out
         </div>
-        <div class="hidden content">
-          <i class="sign-out icon"></i>
+        <div className="hidden content">
+          <i className="sign-out icon"></i>
         </div>
       </div>
     </Link>

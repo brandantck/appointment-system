@@ -24,26 +24,35 @@ router.route("/")
   // Fix appointment
   .post(async (req, res) => {
     const { doctor_id, patient_id, date, time } = req.body
-    const response = await db('appointments').insert({ doctor_id: doctor_id, patient_id: patient_id, date: date, time: time })
+    try {
+      const response = await db('appointments').insert({ doctor_id: doctor_id, patient_id: patient_id, date: date, time: time })
+      const { rowCount } = response
 
-    const { rowCount } = response
-    if (rowCount == 0) {
-      res.status(400).send("Failed to fix appointment")
+      if (rowCount == 0) {
+        res.status(400).send("Failed to fix appointment")
+      } else {
+        res.send({ rowCount })
+      }
+    } catch (error) {
+      res.status(500).send("Unexpected error on server!")
     }
-
-    res.send({ rowCount })
   })
   // Cancel appointment
   .delete(async (req, res) => {
     const { doctor_id, patient_id, date, time } = req.body
-    const response = await db('appointments').where({ doctor_id: doctor_id, patient_id: patient_id, date: date, time: time }).del().returning("id")
+    try {
+      const response = await db('appointments').where({ doctor_id: doctor_id, patient_id: patient_id, date: date, time: time }).del().returning("id")
 
-    if (response.length == 0) {
-      res.status(400).send("Failed to delete appointment")
+      if (response.length == 0) {
+        res.status(400).send("Failed to cancel appointment")
+      } else {
+        // Return appointment id of row that was deleted
+        res.send({ id: response[0].id })
+      }
+
+    } catch (error) {
+      res.status(500).send("Unexpected error on server!")
     }
-
-    // Return appointment id of row that was deleted
-    res.send({ id: response[0].id })
   })
 
 // Get all appointments by doctor_id
@@ -70,12 +79,22 @@ router.route("/doctor/:id/date/:date")
     res.send(response)
   })
 
+
+// Get all unique appointment dates that a doctor has
+router.route("/dates/doctor/:id/")
+  .get(async (req, res) => {
+    const { id } = req.params
+    const response = await db('appointments').where({ doctor_id: id })
+    const dates = _.uniq(_.map(response, "date"))
+    res.send(dates)
+  })
+
 // Get available timeslot based on doctor_id, patient_id and date, to get both available timeslots based on both doctor's and patient's appointments
 router.route("/available-timeslots")
   .post(async (req, res) => {
     const { doctor_id, patient_id, date } = req.body
-    const response = await db('appointments').where({patient_id: patient_id, date: date}).orWhere({doctor_id: doctor_id, date: date}).returning('time')
-    
+    const response = await db('appointments').where({ patient_id: patient_id, date: date }).orWhere({ doctor_id: doctor_id, date: date }).returning('time')
+
     // From array of doctor's and patient's appointments on that particular date, extract out all the timeslots
     const takenTimeSlots = _.map(response, "time")
 

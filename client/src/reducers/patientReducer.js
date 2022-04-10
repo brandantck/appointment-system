@@ -5,7 +5,6 @@ import {
 const patientReducer = (state=[], action) => {
   switch (action.type) {
     case FETCH_PATIENTS:
-      // return [...state, ...action.payload]
       return action.payload
     default:
       return state
