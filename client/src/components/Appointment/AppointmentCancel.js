@@ -20,12 +20,12 @@ function ModalExampleBasic({ doctor_id, patient_id, date, time, cancelAppointmen
       open={open}
       size='small'
       trigger={
-        <div class="ui red circular animated fade button" tabindex="0">
-        <div class="visible content">
+        <div className="ui red circular animated fade button" tabIndex="0">
+        <div className="visible content">
           Cancel
         </div>
-        <div class="hidden content">
-          <i class="delete icon"></i>
+        <div className="hidden content">
+          <i className="delete icon"></i>
         </div>
       </div>
       }

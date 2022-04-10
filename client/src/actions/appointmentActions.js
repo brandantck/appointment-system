@@ -1,7 +1,8 @@
 import server from "../apis/server"
 import {
   FETCH_APPOINTMENTS,
-  CANCEL_APPOINTMENT
+  CANCEL_APPOINTMENT,
+  FETCH_DOCTOR_APPOINTMENTS_BY_DATE,
 } from './types';
 
 import { toast } from 'react-toastify';
@@ -27,20 +28,26 @@ export const fetchDoctorAppointments = (userId) => async dispatch => {
   dispatch({ type: FETCH_APPOINTMENTS, payload: response.data });
 }
 
+export const fetchDoctorAppointmentsByDate = (userId, date) => async dispatch => {
+  const response = await server.get(`/appointments/doctor/${userId}/date/${date}`);
+
+  dispatch({ type: FETCH_DOCTOR_APPOINTMENTS_BY_DATE, payload: response.data });
+}
+
 export const cancelAppointment = (doctor_id, patient_id, date, time) => async dispatch => {
-  const response = await server.delete("/appointments/", {
-    data: {
-      doctor_id, patient_id, date, time
+  try {
+    const response = await server.delete("/appointments/", {
+      data: {
+        doctor_id, patient_id, date, time
+      }
+    });
+
+    if (response.status === 200) {
+      dispatch({ type: CANCEL_APPOINTMENT, payload: response.data.id });
+      toast.info("Successfully cancelled appointment",
+        { position: toast.POSITION.TOP_CENTER, autoClose: 750 });
     }
-  });
-
-  if (response.status === 200) {
-    dispatch({ type: CANCEL_APPOINTMENT, payload: response.data.id });
-    
-    toast.info("Successfully cancelled appointment",
-      { position: toast.POSITION.TOP_CENTER, autoClose: 750 });
-
-  } else {
-    console.log("Fail to cancel appointment")
+  } catch (error) {
+    toast.error(error.response.data, { position: toast.POSITION.TOP_CENTER, autoClose: 1000 })
   }
 }

@@ -18,21 +18,19 @@ import 'react-toastify/dist/ReactToastify.css';
 toast.configure()
 
 const Login = ({ patients, doctors, signIn, fetchAllUsers, authDoctor }) => {
+  const navigate = useNavigate();
 
   // On initial render, fetch all doctors and patients from database
   useEffect(() => {
     fetchAllUsers()
   }, [])
 
-  let navigate = useNavigate();
   const onSubmit = (values) => {
     let allUsers = _.keyBy([...doctors, ...patients], 'id')
-    console.log(allUsers)
 
     if (!(values.userId in allUsers)) {
       return { userId: "Unknown user ID" };
     }
-    console.log(allUsers[values.userId].name)
     if (values.userName !== allUsers[values.userId].name) {
       return { [FORM_ERROR]: "Wrong name" };
     }
@@ -43,7 +41,7 @@ const Login = ({ patients, doctors, signIn, fetchAllUsers, authDoctor }) => {
     }
 
     signIn(values.userId, values.userName)
-    toast("Login sucess",
+    toast("Login Success!",
       { position: toast.POSITION.TOP_CENTER, autoClose: 500 });
     navigate("/main");
   };
@@ -76,7 +74,7 @@ const Login = ({ patients, doctors, signIn, fetchAllUsers, authDoctor }) => {
                   <Field name="userId">
                     {({ input, meta }) => (
                       <>
-                        <input {...input} type="text" placeholder="userId" />
+                        <input {...input} type="text" placeholder="User ID" />
                         {(meta.error || meta.submitError) && meta.touched && (
                           <div className="ui error message">
                             {meta.error || meta.submitError}
@@ -94,7 +92,7 @@ const Login = ({ patients, doctors, signIn, fetchAllUsers, authDoctor }) => {
                         <input
                           {...input}
                           type="text"
-                          placeholder="userName"
+                          placeholder="Name"
                         />
                         {meta.error && meta.touched && (
                           <div className="ui error message">
