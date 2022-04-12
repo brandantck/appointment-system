@@ -1,19 +1,11 @@
 const express = require("express");
 let router = express.Router();
-const db = require('../db')
-
+const doctorController = require("../controller/doctor");
 
 router.route("/")
-  .get(async (req, res) => {
-    const response = await db('doctors').select("*")
-    res.send(response)
-  })
+  .get(doctorController.getAllDoctors)
 
 router.route("/:id")
-  .get(async (req, res) => {
-    const id = req.params.id
-    const response = await db('doctors').where({id: id})
-    res.send(response)
-  })
+  .get(doctorController.getDoctorById)
   
 module.exports = router;

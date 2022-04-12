@@ -6,8 +6,8 @@ const patients = require("./routes/patients");
 const doctors = require("./routes/doctors");
 const appointments = require("./routes/appointments");
 
-const db = require('./db')
-const initdb = require('./initdb')
+const db = require('./db/db')
+const initdb = require('./db/initdb')
 initdb(db)
 
 const PORT = process.env.PORT || 5000
