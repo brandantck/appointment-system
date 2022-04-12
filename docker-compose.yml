@@ -14,6 +14,7 @@ services:
   server:
     depends_on:
       - postgres
+    command: bash -c 'while !</dev/tcp/postgres/5432; do sleep 1; done; npm run dev' # Wait for postgres service to be up before running npm run dev
     build:
       dockerfile: Dockerfile
       context: ./server

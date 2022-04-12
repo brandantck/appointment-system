@@ -3,4 +3,5 @@ WORKDIR /app
 COPY ./package.json ./
 RUN npm install
 COPY . .
-CMD ["npm", "run", "dev"]
+RUN apk add --no-cache bash
+# CMD ["npm", "run", "dev"]
