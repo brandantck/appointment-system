@@ -24,7 +24,6 @@ const AppointmentDateDropdown = ({ doctorId, fetchDoctorAppointments, fetchDocto
     if (selectedDate == "all") {
       fetchDoctorAppointments(doctorId)
     } else {
-      console.log(selectedDate)
       fetchDoctorAppointmentsByDate(doctorId, selectedDate)
     }
     

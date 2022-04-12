@@ -87,9 +87,6 @@ const AppointmentFix = ({ userId, isDoctor, doctors, patients, availableTimeslot
       { position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
       navigate("/main")
     }
-
-    console.log(values)
-    console.log(response)
   }
 
   const doctorOptions = doctors.map(doctor => {
