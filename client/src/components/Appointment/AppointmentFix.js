@@ -6,6 +6,8 @@ import { useNavigate, Link } from "react-router-dom";
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css";
 
+import { fetchAvailableTimeslots } from "../../actions/availableTimeslotsActions"
+
 import _ from "lodash";
 import server from "../../apis/server";
 
@@ -16,14 +18,14 @@ import 'react-toastify/dist/ReactToastify.css';
    
 toast.configure()
 
-const AppointmentFix = ({ userId, isDoctor, doctors, patients }) => {
+const AppointmentFix = ({ userId, isDoctor, doctors, patients, availableTimeslots, fetchAvailableTimeslots }) => {
 
   const navigate = useNavigate();
 
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedDoctorId, setSelectedDoctorId] = useState("");
   const [selectedpatientId, setSelectedpatientId] = useState("");
-  const [availableTimeslots, setAvailableTimeslots] = useState([]);
+  // const [availableTimeslots, setAvailableTimeslots] = useState([]);
 
   const onFormValuesChange = (form, e) => {
     const { date, doctorId, patientId } = e.values
@@ -48,14 +50,19 @@ const AppointmentFix = ({ userId, isDoctor, doctors, patients }) => {
   // If selected date, doctorId or patientId changes, send request to get everyone's avaiable appointment timeslots
   useEffect(async () => {
     // Get all of the doctors appointments on that date and time
-    let timeSlots = []
     if (selectedDoctorId && selectedpatientId && selectedDate) {
-      const response = await server.post("/appointments/available-timeslots", {
-        doctor_id: selectedDoctorId, patient_id: selectedpatientId, date: selectedDate
-      });
-      timeSlots = response.data
+      fetchAvailableTimeslots({
+        doctor_id: selectedDoctorId,
+        patient_id: selectedpatientId,
+        date: selectedDate,
+      })
+
+      // const response = await server.post("/appointments/available-timeslots", {
+      //   doctor_id: selectedDoctorId, patient_id: selectedpatientId, date: selectedDate
+      // });
+      // timeSlots = response.data
     }
-    setAvailableTimeslots(timeSlots)
+    // setAvailableTimeslots(timeSlots)
   }, [selectedDate, selectedDoctorId, selectedpatientId])
 
   const DatePickerAdapter = ({ input: { onChange, value }, ...rest }) => (
@@ -194,7 +201,10 @@ const mapStateToProps = (state) => {
     isDoctor: state.auth.isDoctor,
     doctors: state.doctors,
     patients: state.patients,
+    availableTimeslots: state.availableTimeslots
   }
 }
 
-export default connect(mapStateToProps)(AppointmentFix);
+export default connect(mapStateToProps, {
+  fetchAvailableTimeslots
+})(AppointmentFix);
