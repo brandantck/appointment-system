@@ -98,7 +98,7 @@ router.route("/available-timeslots")
     // From array of doctor's and patient's appointments on that particular date, extract out all the timeslots
     const takenTimeSlots = _.map(response, "time")
 
-    // Get difference between default doctor timeslots and currently taken up timeslots
+    // Get difference between default appointment timeslots and currently taken up timeslots
     const availableTimeSlots = _.differenceWith(defaultAppointmentTimeSlots, takenTimeSlots, _.isEqual)
 
     res.send(availableTimeSlots)
