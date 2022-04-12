@@ -66,7 +66,6 @@ const AppointmentFix = ({ userId, isDoctor, doctors, patients }) => {
     const { patientId, doctorId, date, time } = values
 
     if (!(patientId && doctorId && date && time)) {
-      console.log('form error')
       return { [FORM_ERROR]: "Please fill in all the fields" };
     }
   
