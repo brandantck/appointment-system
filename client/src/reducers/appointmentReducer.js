@@ -1,8 +1,6 @@
-import { fetchAvailableTimeslots } from "../actions/appointmentActions";
 import {
   FETCH_APPOINTMENTS,
   CANCEL_APPOINTMENT,
-  FETCH_DOCTOR_APPOINTMENTS_BY_DATE,
   FETCH_AVAILABLE_TIMESLOTS,
 } from "../actions/types";
 
@@ -14,11 +12,6 @@ const INITIAL_STATE = {
 const appointmentReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case FETCH_APPOINTMENTS:
-      return {
-        ...state,
-        appointments: action.payload
-      }
-    case FETCH_DOCTOR_APPOINTMENTS_BY_DATE:
       return {
         ...state,
         appointments: action.payload

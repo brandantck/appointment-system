@@ -49,7 +49,7 @@ const Main = ({
           </Link>
         </div>
       </div>
-      {appointments.length == 0 &&
+      {appointments.length === 0 &&
         <div className="ui segment yellow inverted">
           <h3 className="ui center aligned header">You have no appointments</h3>
         </div>

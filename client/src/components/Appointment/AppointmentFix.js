@@ -48,7 +48,7 @@ const AppointmentFix = ({ userId, isDoctor, doctors, patients, availableTimeslot
   }
 
   // If selected date, doctorId or patientId changes, send request to get everyone's avaiable appointment timeslots
-  useEffect(async () => {
+  useEffect(() => {
     // Get all of the doctors appointments on that date and time
     if (selectedDoctorId && selectedpatientId && selectedDate) {
       fetchAvailableTimeslots({
@@ -63,7 +63,7 @@ const AppointmentFix = ({ userId, isDoctor, doctors, patients, availableTimeslot
       // timeSlots = response.data
     }
     // setAvailableTimeslots(timeSlots)
-  }, [selectedDate, selectedDoctorId, selectedpatientId])
+  }, [selectedDate, selectedDoctorId, selectedpatientId, fetchAvailableTimeslots])
 
   const DatePickerAdapter = ({ input: { onChange, value }, ...rest }) => (
     <DatePicker selected={value} onChange={date => onChange(date)} showYearDropdown={true} scrollableYearDropdown={true} {...rest} />

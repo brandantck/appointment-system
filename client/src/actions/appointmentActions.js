@@ -2,7 +2,6 @@ import server from "../apis/server"
 import {
   FETCH_APPOINTMENTS,
   CANCEL_APPOINTMENT,
-  FETCH_DOCTOR_APPOINTMENTS_BY_DATE,
   FETCH_AVAILABLE_TIMESLOTS,
 } from './types';
 
@@ -32,7 +31,7 @@ export const fetchDoctorAppointments = (userId) => async dispatch => {
 export const fetchDoctorAppointmentsByDate = (userId, date) => async dispatch => {
   const response = await server.get(`/appointments/doctor/${userId}/date/${date}`);
 
-  dispatch({ type: FETCH_DOCTOR_APPOINTMENTS_BY_DATE, payload: response.data });
+  dispatch({ type: FETCH_APPOINTMENTS, payload: response.data });
 }
 
 export const cancelAppointment = (doctor_id, patient_id, date, time) => async dispatch => {
