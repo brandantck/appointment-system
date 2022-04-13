@@ -4,4 +4,4 @@ COPY ./package.json ./
 RUN npm install
 COPY . .
 RUN apk add --no-cache bash
-# CMD npm run dev
+# CMD ["npm", "run", "dev"]
