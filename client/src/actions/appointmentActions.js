@@ -1,6 +1,7 @@
 import server from "../apis/server"
 import {
   FETCH_APPOINTMENTS,
+  FIX_APPOINTMENT,
   CANCEL_APPOINTMENT,
   FETCH_AVAILABLE_TIMESLOTS,
 } from './types';
@@ -32,6 +33,29 @@ export const fetchDoctorAppointmentsByDate = (userId, date) => async dispatch =>
   const response = await server.get(`/appointments/doctor/${userId}/date/${date}`);
 
   dispatch({ type: FETCH_APPOINTMENTS, payload: response.data });
+}
+
+export const fixAppointment = ({ doctor_id, patient_id, date, time }) => async dispatch => {
+  try {
+    const response = await server.post("/appointments/", {
+      doctor_id, patient_id, date, time
+    });
+
+    if (response.status === 200) {
+      toast.success("Successfully fixed appointment",
+        { position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
+      dispatch({
+        type: FIX_APPOINTMENT,
+        payload: {
+          id: response.id,
+          doctor_id, patient_id, date, time
+        }
+      })
+    }
+    
+  } catch (error) {
+    throw new Error(error.response.data)
+  }
 }
 
 export const cancelAppointment = (doctor_id, patient_id, date, time) => async dispatch => {

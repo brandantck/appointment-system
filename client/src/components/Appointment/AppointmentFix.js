@@ -6,26 +6,25 @@ import { useNavigate, Link } from "react-router-dom";
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css";
 
-import { fetchAvailableTimeslots } from "../../actions/appointmentActions"
+import { fetchAvailableTimeslots, fixAppointment } from "../../actions/appointmentActions"
 
 import _ from "lodash";
 import server from "../../apis/server";
 
 import moment from "moment";
 
-import {toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-   
+
 toast.configure()
 
-const AppointmentFix = ({ userId, isDoctor, doctors, patients, availableTimeslots, fetchAvailableTimeslots }) => {
+const AppointmentFix = ({ userId, isDoctor, doctors, patients, availableTimeslots, fetchAvailableTimeslots, fixAppointment }) => {
 
   const navigate = useNavigate();
 
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedDoctorId, setSelectedDoctorId] = useState("");
   const [selectedpatientId, setSelectedpatientId] = useState("");
-  // const [availableTimeslots, setAvailableTimeslots] = useState([]);
 
   const onFormValuesChange = (form, e) => {
     const { date, doctorId, patientId } = e.values
@@ -56,13 +55,7 @@ const AppointmentFix = ({ userId, isDoctor, doctors, patients, availableTimeslot
         patient_id: selectedpatientId,
         date: selectedDate,
       })
-
-      // const response = await server.post("/appointments/available-timeslots", {
-      //   doctor_id: selectedDoctorId, patient_id: selectedpatientId, date: selectedDate
-      // });
-      // timeSlots = response.data
     }
-    // setAvailableTimeslots(timeSlots)
   }, [selectedDate, selectedDoctorId, selectedpatientId, fetchAvailableTimeslots])
 
   const DatePickerAdapter = ({ input: { onChange, value }, ...rest }) => (
@@ -75,18 +68,14 @@ const AppointmentFix = ({ userId, isDoctor, doctors, patients, availableTimeslot
     if (!(patientId && doctorId && date && time)) {
       return { [FORM_ERROR]: "Please fill in all the fields" };
     }
-  
     const dateStr = moment(date).format("yyyy-MM-DD")
-
-    const response = await server.post("/appointments/", {
-      doctor_id: doctorId, patient_id: patientId, date: dateStr, time: time
-    });
-
-    if (response.status === 200) {
-      toast.success("Successfully fixed appointment",
-      { position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
+    try {
+      await fixAppointment({ doctor_id: doctorId, patient_id: patientId, date: dateStr, time: time })
       navigate("/main")
+    } catch (error) {
+      toast.error(error.message, { position: toast.POSITION.TOP_CENTER, autoClose: 1000 })
     }
+
   }
 
   const doctorOptions = doctors.map(doctor => {
@@ -203,5 +192,5 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, {
-  fetchAvailableTimeslots
+  fetchAvailableTimeslots, fixAppointment
 })(AppointmentFix);
