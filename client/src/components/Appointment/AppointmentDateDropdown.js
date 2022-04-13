@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { connect } from "react-redux";
 import server from "../../apis/server"
 
@@ -11,11 +11,15 @@ const AppointmentDateDropdown = ({ doctorId, fetchDoctorAppointments, fetchDocto
   const [uniqueAppointmentDates, setUniqueAppointmentDates] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");
 
-  // Get unique list of doctor appointment dates and sort by date
-  useEffect(async () => {
+  const fetchDates = useCallback(async () => {
     const response = await server.get(`appointments/dates/doctor/${doctorId}`)
     setUniqueAppointmentDates(_.sortBy(response.data))
-  }, [])
+  }, [doctorId])
+
+  // Get unique list of doctor appointment dates and sort by date
+  useEffect(() => {
+    fetchDates()
+  }, [fetchDates])
 
   // Fetch and update appointments state based on selection made in date dropdown
   useEffect(() => {
@@ -23,13 +27,13 @@ const AppointmentDateDropdown = ({ doctorId, fetchDoctorAppointments, fetchDocto
       return null
     }
 
-    if (selectedDate == "all") {
+    if (selectedDate === "all") {
       fetchDoctorAppointments(doctorId)
     } else {
       fetchDoctorAppointmentsByDate(doctorId, selectedDate)
     }
-    
-  }, [selectedDate])
+
+  }, [doctorId, selectedDate, fetchDoctorAppointments, fetchDoctorAppointmentsByDate])
 
   return (
     <>

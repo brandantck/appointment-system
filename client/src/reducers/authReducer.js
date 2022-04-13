@@ -1,6 +1,5 @@
 import {
   SIGN_IN,
-  SIGN_OUT,
   AUTH_DOCTOR,
 } from "../actions/types";
 

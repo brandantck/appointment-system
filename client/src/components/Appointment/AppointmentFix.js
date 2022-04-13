@@ -8,9 +8,6 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import { fetchAvailableTimeslots, fixAppointment } from "../../actions/appointmentActions"
 
-import _ from "lodash";
-import server from "../../apis/server";
-
 import moment from "moment";
 
 import { toast } from 'react-toastify';
