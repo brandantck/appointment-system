@@ -10,11 +10,8 @@ import "./Login.css";
 
 import { toast } from 'react-toastify';
 
-// Import toastify css file
 import 'react-toastify/dist/ReactToastify.css';
 
-// toast-configuration method,
-// it is compulsory method.
 toast.configure()
 
 const Login = ({ patients, doctors, signIn, fetchAllUsers, authDoctor }) => {
@@ -28,9 +25,11 @@ const Login = ({ patients, doctors, signIn, fetchAllUsers, authDoctor }) => {
   const onSubmit = (values) => {
     let allUsers = _.keyBy([...doctors, ...patients], 'id')
 
+    // If userId does not match
     if (!(values.userId in allUsers)) {
       return { userId: "Unknown user ID" };
     }
+    // If name does not match userId
     if (values.userName !== allUsers[values.userId].name) {
       return { [FORM_ERROR]: "Wrong name" };
     }

@@ -11,30 +11,31 @@ import 'react-toastify/dist/ReactToastify.css';
 
 toast.configure()
 
+// Fetch all appointments
 export const fetchAppointments = () => async dispatch => {
   const response = await server.get("/appointments/");
-
   dispatch({ type: FETCH_APPOINTMENTS, payload: response.data });
 }
 
+// Fetch all all appointments by patient_id
 export const fetchPatientAppointments = (userId) => async dispatch => {
   const response = await server.get(`/appointments/patient/${userId}`);
-
   dispatch({ type: FETCH_APPOINTMENTS, payload: response.data });
 }
 
+// Fetch all all appointments by doctor_id
 export const fetchDoctorAppointments = (userId) => async dispatch => {
   const response = await server.get(`/appointments/doctor/${userId}`);
-
   dispatch({ type: FETCH_APPOINTMENTS, payload: response.data });
 }
 
+// Fetch all all appointments by doctor_id and date
 export const fetchDoctorAppointmentsByDate = (userId, date) => async dispatch => {
   const response = await server.get(`/appointments/doctor/${userId}/date/${date}`);
-
   dispatch({ type: FETCH_APPOINTMENTS, payload: response.data });
 }
 
+// Fix appointment by doctor_id, patient_id, date, time
 export const fixAppointment = ({ doctor_id, patient_id, date, time }) => async dispatch => {
   try {
     const response = await server.post("/appointments/", {
@@ -52,12 +53,12 @@ export const fixAppointment = ({ doctor_id, patient_id, date, time }) => async d
         }
       })
     }
-    
   } catch (error) {
     throw new Error(error.response.data)
   }
 }
 
+// Cancel appointment by doctor_id, patient_id, date, time
 export const cancelAppointment = (doctor_id, patient_id, date, time) => async dispatch => {
   try {
     const response = await server.delete("/appointments/", {
@@ -76,6 +77,7 @@ export const cancelAppointment = (doctor_id, patient_id, date, time) => async di
   }
 }
 
+// Fetch all available timeslots based on doctor_id, patient_id, date
 export const fetchAvailableTimeslots = ({ doctor_id, patient_id, date }) => async dispatch => {
   const response = await server.post("/appointments/available-timeslots", {
     doctor_id: doctor_id, patient_id: patient_id, date: date

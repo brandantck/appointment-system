@@ -26,27 +26,30 @@ const AppointmentFix = ({ userId, isDoctor, doctors, patients, availableTimeslot
   const [selectedDoctorId, setSelectedDoctorId] = useState("");
   const [selectedpatientId, setSelectedpatientId] = useState("");
 
+  // Run when any form value changes
   const onFormValuesChange = (form, e) => {
     const { date, doctorId, patientId } = e.values
-    // If date value is different from selectedDate value, setSelectedDate value
     const dateStr = moment(date).format("yyyy-MM-DD")
+    // If date value has changed, set state and reset time field in form
     if (selectedDate !== dateStr) {
       setSelectedDate(dateStr)
       form.change("time", null)
     }
 
+    // If doctor_id has changed, set state and reset time field in form
     if (selectedDoctorId !== doctorId) {
       setSelectedDoctorId(doctorId)
       form.change("time", null)
     }
 
+    // If patient_id has changed, set state and reset time field in form
     if (selectedpatientId !== patientId) {
       setSelectedpatientId(patientId)
       form.change("time", null)
     }
   }
 
-  // If selected date, doctorId or patientId changes, send request to get everyone's avaiable appointment timeslots
+  // If selected date, doctorId or patientId changes, send request to avaiable appointment timeslots.
   useEffect(() => {
     // Get all of the doctors appointments on that date and time
     if (selectedDoctorId && selectedpatientId && selectedDate) {
@@ -58,17 +61,23 @@ const AppointmentFix = ({ userId, isDoctor, doctors, patients, availableTimeslot
     }
   }, [selectedDate, selectedDoctorId, selectedpatientId, fetchAvailableTimeslots])
 
+  // Date picker adapter for react-final-form
   const DatePickerAdapter = ({ input: { onChange, value }, ...rest }) => (
     <DatePicker selected={value} onChange={date => onChange(date)} showYearDropdown={true} scrollableYearDropdown={true} {...rest} />
     // minDate={new Date()}
   );
+
+  // Create Action to fix appointment if all values in the form are filled
   const onSubmit = async (values) => {
     const { patientId, doctorId, date, time } = values
 
+    // If any values are not filled, return form error
     if (!(patientId && doctorId && date && time)) {
       return { [FORM_ERROR]: "Please fill in all the fields" };
     }
-    const dateStr = moment(date).format("yyyy-MM-DD")
+
+    // Convert datetime to date string
+    const dateStr = moment(date).format("yyyy-MM-DD") 
     try {
       await fixAppointment({ doctor_id: doctorId, patient_id: patientId, date: dateStr, time: time })
       navigate("/main")
@@ -78,18 +87,19 @@ const AppointmentFix = ({ userId, isDoctor, doctors, patients, availableTimeslot
 
   }
 
+  // Render doctorId options
   const doctorOptions = doctors.map(doctor => {
     return (
       <option key={doctor.id} value={doctor.id}>{doctor.id}</option>
     )
   });
-
+  // Render patientId options
   const patientOptions = patients.map(patient => {
     return (
       <option key={patient.id} value={patient.id}>{patient.id}</option>
     )
   });
-
+  // Render time options
   const timeOptions = availableTimeslots.map(timeslot => {
     return (
       <option key={timeslot} value={timeslot}>{timeslot}</option>

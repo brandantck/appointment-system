@@ -15,6 +15,8 @@ const Appointment = ({
   doctors,
   isDoctor
 }) => {
+
+  // Get patient details from patient_id
   const patientDetails = _.find(patients, { id: patient_id })
 
   // Get name based on whether current user is a doctor or not, show doctor name if current user is patient, show patient name if current user is doctor.

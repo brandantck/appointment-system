@@ -11,11 +11,13 @@ const AppointmentDateDropdown = ({ doctorId, fetchDoctorAppointments, fetchDocto
   const [uniqueAppointmentDates, setUniqueAppointmentDates] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");
 
+  // Get unique list of doctor appointment dates and sort by date
   useEffect(async () => {
     const response = await server.get(`appointments/dates/doctor/${doctorId}`)
     setUniqueAppointmentDates(_.sortBy(response.data))
   }, [])
 
+  // Fetch and update appointments state based on selection made in date dropdown
   useEffect(() => {
     if (!selectedDate) {
       return null
