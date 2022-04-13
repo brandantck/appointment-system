@@ -6,7 +6,7 @@ import { useNavigate, Link } from "react-router-dom";
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css";
 
-import { fetchAvailableTimeslots } from "../../actions/availableTimeslotsActions"
+import { fetchAvailableTimeslots } from "../../actions/appointmentActions"
 
 import _ from "lodash";
 import server from "../../apis/server";
@@ -198,7 +198,7 @@ const mapStateToProps = (state) => {
     isDoctor: state.auth.isDoctor,
     doctors: state.doctors,
     patients: state.patients,
-    availableTimeslots: state.availableTimeslots
+    availableTimeslots: state.appointments.availableTimeslots
   }
 }
 

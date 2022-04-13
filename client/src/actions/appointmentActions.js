@@ -3,6 +3,7 @@ import {
   FETCH_APPOINTMENTS,
   CANCEL_APPOINTMENT,
   FETCH_DOCTOR_APPOINTMENTS_BY_DATE,
+  FETCH_AVAILABLE_TIMESLOTS,
 } from './types';
 
 import { toast } from 'react-toastify';
@@ -50,4 +51,12 @@ export const cancelAppointment = (doctor_id, patient_id, date, time) => async di
   } catch (error) {
     toast.error(error.response.data, { position: toast.POSITION.TOP_CENTER, autoClose: 1000 })
   }
+}
+
+export const fetchAvailableTimeslots = ({ doctor_id, patient_id, date }) => async dispatch => {
+  const response = await server.post("/appointments/available-timeslots", {
+    doctor_id: doctor_id, patient_id: patient_id, date: date
+  });
+
+  dispatch({ type: FETCH_AVAILABLE_TIMESLOTS, payload: response.data });
 }

@@ -4,7 +4,6 @@ import authReducer from './authReducer';
 import doctorReducer from './doctorReducer';
 import patientReducer from './patientReducer';
 import appointmentReducer from './appointmentReducer';
-import availableTimeslotsReducer from './availableTimeslotsReducer';
 
 // export default combineReducers({
 //   auth: authReducer,
@@ -18,7 +17,6 @@ const appReducer = combineReducers({
     doctors: doctorReducer,
     patients: patientReducer,
     appointments: appointmentReducer,
-    availableTimeslots: availableTimeslotsReducer,
   });
 
 // When user signs out, reset all redux state values

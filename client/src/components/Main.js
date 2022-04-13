@@ -63,7 +63,7 @@ const mapStateToProps = (state) => {
   return {
     userId: state.auth.userId,
     isDoctor: state.auth.isDoctor,
-    appointments: state.appointments,
+    appointments: state.appointments.appointments,
   };
 };
 
