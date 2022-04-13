@@ -131,21 +131,9 @@ const AppointmentFix = ({ userId, isDoctor, doctors, patients, availableTimeslot
 
               <div className="field">
                 <label>Available time slots</label>
-                <Field name="time">
-
-                  {({ input, meta }) => (
-                    <>
-                      <select {...input}>
-                        {availableTimeslots.length ? <option hidden value={null}>Pick a time</option> : <option hidden value={null}>No timeslots available, select another date</option>}
-                        {timeOptions}
-                      </select>
-                      {meta.error && meta.touched && (
-                        <div className="ui error message">
-                          {meta.error}
-                        </div>
-                      )}
-                    </>
-                  )}
+                <Field name="time" component="select">
+                  {availableTimeslots.length ? <option hidden value={null}>Pick a time</option> : <option hidden value={null}>No timeslots available, select another date</option>}
+                  {timeOptions}
                 </Field>
               </div>
 
