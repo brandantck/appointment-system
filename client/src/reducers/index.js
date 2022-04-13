@@ -5,13 +5,6 @@ import doctorReducer from './doctorReducer';
 import patientReducer from './patientReducer';
 import appointmentReducer from './appointmentReducer';
 
-// export default combineReducers({
-//   auth: authReducer,
-//   appointments: appointmentReducer,
-//   doctors: doctorReducer,
-//   patients: patientReducer,
-// });
-
 const appReducer = combineReducers({
     auth: authReducer,
     doctors: doctorReducer,
