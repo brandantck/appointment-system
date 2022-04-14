@@ -1,6 +1,7 @@
 const _ = require('lodash')
 
 const appointmentDAO = require("../dao/appointment");
+const constants = require("../lib/constants")
 
 class AppointmentService {
 
@@ -47,22 +48,10 @@ class AppointmentService {
     const { doctor_id, patient_id, date } = appointment_details
     const response = await appointmentDAO.getAvailableTimeslots(doctor_id, patient_id, date);
 
-    const defaultAppointmentTimeSlots = [
-      "08:00:00",
-      "09:00:00",
-      "10:00:00",
-      "11:00:00",
-      "12:00:00",
-      "13:00:00",
-      "14:00:00",
-      "15:00:00",
-      "16:00:00",
-    ]
-
     // From array of doctor's and patient's appointments on that particular date, extract out all the timeslots
     const takenTimeSlots = _.map(response, "time")
     // Get difference between default appointment timeslots and currently taken up timeslots
-    const availableTimeSlots = _.differenceWith(defaultAppointmentTimeSlots, takenTimeSlots, _.isEqual)
+    const availableTimeSlots = _.differenceWith(constants.defaultAppointmentTimeSlots, takenTimeSlots, _.isEqual)
 
     return availableTimeSlots
   }
