@@ -1,7 +1,7 @@
 // INIT doctors table
 const initDoctors = async (db) => {
   try {
-    await db.schema.dropTableIfExists('doctors')
+    await db.raw("DROP TABLE if exists doctors cascade")
     await db.schema.withSchema('public').createTable('doctors', (table) => {
       table.string('id').primary()
       table.string('name')
@@ -22,7 +22,7 @@ const initDoctors = async (db) => {
 // INIT patients table
 const initPatients = async (db) => {
   try {
-    await db.schema.dropTableIfExists("patients")
+    await db.raw("DROP TABLE if exists patients cascade")
     await db.schema.withSchema("public").createTable("patients", (table) => {
       table.string("id").primary()
       table.string("name")
@@ -46,7 +46,7 @@ const initPatients = async (db) => {
 // INIT appointments table
 const initAppointments = async (db) => {
   try {
-    await db.schema.dropTableIfExists("appointments")
+    await db.raw("DROP TABLE if exists appointments cascade")
     await db.schema.withSchema("public").createTable("appointments", (table) => {
       table.increments("id")
       table.string("doctor_id").references("id").inTable("doctors")
