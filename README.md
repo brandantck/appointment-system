@@ -6,6 +6,7 @@ This application is built with a ReactJS frontend client, Express.js backend API
 ## Installation
 ### Using Docker Compose
 With [Docker Compose](https://docs.docker.com/compose/install/), you can run this whole project with  just one command.
+
 First clone this repository, and in the root folder(e.g where the file titled "docker-compose.yml" is located), run the command
 > docker-compose up
 
