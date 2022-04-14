@@ -20,3 +20,12 @@ You can access the application at your browser at
 
 ## Entities and relations
 ![ER Diagram](./ERDiagram.png)
+
+
+## Assumptions
+- There are only two types of users for this app, doctors and patients.
+- To login, only the ID and NAME is required.
+- Doctors and patients can both use this booking application, but only doctors have the option to sort their appointments by date, as they would have many appointments booked, but typically for patients they will not have multiple appointments booked at the same time.
+- To fix an appointment, it will require both patient and doctor's schedules to be free for the corresponding date and time.
+- A user cannot fix appointments for other users of the same type, e.g doctors cannot fix appointment for other doctors but can fix appointments with different patients, and patients cannot fix appointments for other patients, but can fix appointment with different doctors.
+- At the main page, doctors will be able to see the patient's name, age and gender for each appointment, but patients will only see the doctor's name
