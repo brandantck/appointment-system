@@ -21,6 +21,8 @@ You can access the application at your browser at
 ## Entities and relations
 ![ER Diagram](./ERDiagram.png)
 
+## Application Architecture
+![ER Diagram](./architecture.png)
 
 ## Assumptions
 - There are only two types of users for this app, doctors and patients.
