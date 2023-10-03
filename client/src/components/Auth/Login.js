@@ -17,10 +17,10 @@ toast.configure()
 const Login = ({ patients, doctors, signIn, fetchAllUsers, authDoctor }) => {
   const navigate = useNavigate();
 
-  // On initial render, fetch all doctors and patients from database
+  // Fetch all doctors and patients from database
   useEffect(() => {
     fetchAllUsers()
-  }, [])
+  }, [fetchAllUsers])
 
   const onSubmit = (values) => {
     let allUsers = _.keyBy([...doctors, ...patients], 'id')

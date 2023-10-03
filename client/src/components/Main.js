@@ -15,7 +15,7 @@ const Main = ({
   fetchDoctorAppointments
 }) => {
 
-  // On initial render, fetch all appointments from database
+  // Fetch all appointments from database
   useEffect(() => {
     // Redux
     if (isDoctor) {
@@ -23,7 +23,7 @@ const Main = ({
     } else {
       fetchPatientAppointments(userId)
     }
-  }, [])
+  }, [isDoctor, userId, fetchDoctorAppointments, fetchPatientAppointments])
 
   const renderAppointments = appointments.map((appointment) => {
     return <Appointment key={appointment.id} {...appointment} />;
