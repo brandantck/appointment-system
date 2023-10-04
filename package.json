@@ -7,7 +7,7 @@
     "start": "NODE_ENV=dev docker compose up --build",
     "build:prod": "NODE_ENV=prod docker compose build ",
     "start:prod": "NODE_ENV=prod docker compose up --build",
-    "format": "prettier --write \"client/**/*.ts\" \"server/**/*.ts\""
+    "format": "prettier --write \"client/**\" \"server/**\""
   },
   "workspaces": {
     "packages": [

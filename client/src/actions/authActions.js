@@ -1,24 +1,20 @@
-import {
-  SIGN_IN,
-  SIGN_OUT,
-  AUTH_DOCTOR,
-} from './types';
+import { SIGN_IN, SIGN_OUT, AUTH_DOCTOR } from "./types";
 
 export const signIn = (userId, userName) => {
   return {
     type: SIGN_IN,
-    payload: { userId, userName }
-  }
-}
+    payload: { userId, userName },
+  };
+};
 
 export const signOut = () => {
   return {
-    type: SIGN_OUT
-  }
-}
+    type: SIGN_OUT,
+  };
+};
 
 export const authDoctor = () => {
   return {
-    type: AUTH_DOCTOR
-  }
-}
+    type: AUTH_DOCTOR,
+  };
+};

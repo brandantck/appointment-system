@@ -12,18 +12,17 @@ const Main = ({
   appointments,
 
   fetchPatientAppointments,
-  fetchDoctorAppointments
+  fetchDoctorAppointments,
 }) => {
-
   // Fetch all appointments from database
   useEffect(() => {
     // Redux
     if (isDoctor) {
-      fetchDoctorAppointments(userId)
+      fetchDoctorAppointments(userId);
     } else {
-      fetchPatientAppointments(userId)
+      fetchPatientAppointments(userId);
     }
-  }, [isDoctor, userId, fetchDoctorAppointments, fetchPatientAppointments])
+  }, [isDoctor, userId, fetchDoctorAppointments, fetchPatientAppointments]);
 
   const renderAppointments = appointments.map((appointment) => {
     return <Appointment key={appointment.id} {...appointment} />;
@@ -39,9 +38,7 @@ const Main = ({
         <div className="column right aligned">
           <Link to="/fix-appointment">
             <div className="ui blue circular animated button" tabIndex="0">
-              <div className="visible content">
-                Fix Appointment
-              </div>
+              <div className="visible content">Fix Appointment</div>
               <div className="hidden content">
                 <i className="right arrow icon"></i>
               </div>
@@ -49,11 +46,11 @@ const Main = ({
           </Link>
         </div>
       </div>
-      {appointments.length === 0 &&
+      {appointments.length === 0 && (
         <div className="ui segment yellow inverted">
           <h3 className="ui center aligned header">You have no appointments</h3>
         </div>
-      }
+      )}
       <div className="ui relaxed divided items">{renderAppointments}</div>
     </>
   );
@@ -69,5 +66,5 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   fetchPatientAppointments,
-  fetchDoctorAppointments
+  fetchDoctorAppointments,
 })(Main);

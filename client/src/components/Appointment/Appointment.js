@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import _ from 'lodash';
+import _ from "lodash";
 
 import AppointmentCancel from "./AppointmentCancel";
 
@@ -12,14 +12,15 @@ const Appointment = ({
   time,
   patients,
   doctors,
-  isDoctor
+  isDoctor,
 }) => {
-
   // Get patient details from patient_id
-  const patientDetails = _.find(patients, { id: patient_id })
+  const patientDetails = _.find(patients, { id: patient_id });
 
   // Get name based on whether current user is a doctor or not, show doctor name if current user is patient, show patient name if current user is doctor.
-  const name = isDoctor ? (_.find(patients, { id: patient_id })).name : (_.find(doctors, { id: doctor_id })).name
+  const name = isDoctor
+    ? _.find(patients, { id: patient_id }).name
+    : _.find(doctors, { id: doctor_id }).name;
 
   return (
     <div className="ui teal raised secondary segment">
@@ -28,17 +29,19 @@ const Appointment = ({
           <div className="content">
             <h3 className="ui teal header"> ApptID: {id}</h3>
             <div>
-              <span className="ui grey header">Date and time: {date}, {time}</span>
+              <span className="ui grey header">
+                Date and time: {date}, {time}
+              </span>
             </div>
             <div>
               <div className="ui divider"></div>
               <span className="ui header">
                 Appointment with {name}
-                {isDoctor &&
+                {isDoctor && (
                   <div>
                     Age: {patientDetails.age} | Gender: {patientDetails.gender}
                   </div>
-                }
+                )}
               </span>
             </div>
           </div>
@@ -47,7 +50,12 @@ const Appointment = ({
           <div className="ui grid">
             <div className="row">
               <div className="column right aligned">
-                <AppointmentCancel doctor_id={doctor_id} patient_id={patient_id} date={date} time={time} />
+                <AppointmentCancel
+                  doctor_id={doctor_id}
+                  patient_id={patient_id}
+                  date={date}
+                  time={time}
+                />
               </div>
             </div>
           </div>
@@ -65,5 +73,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {
-})(Appointment);
+export default connect(mapStateToProps, {})(Appointment);

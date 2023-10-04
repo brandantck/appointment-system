@@ -1,3 +1,3 @@
-export * from "./appointmentActions"
-export * from "./authActions"
-export * from "./userActions"
+export * from "./appointmentActions";
+export * from "./authActions";
+export * from "./userActions";

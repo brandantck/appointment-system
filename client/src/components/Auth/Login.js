@@ -1,29 +1,29 @@
-import _ from 'lodash'
+import _ from "lodash";
 import React, { useEffect } from "react";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Form, Field } from "react-final-form";
 import { FORM_ERROR } from "final-form";
 
-import { signIn, fetchAllUsers, authDoctor } from '../../actions';
+import { signIn, fetchAllUsers, authDoctor } from "../../actions";
 import "./Login.css";
 
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
-toast.configure()
+toast.configure();
 
 const Login = ({ patients, doctors, signIn, fetchAllUsers, authDoctor }) => {
   const navigate = useNavigate();
 
   // Fetch all doctors and patients from database
   useEffect(() => {
-    fetchAllUsers()
-  }, [fetchAllUsers])
+    fetchAllUsers();
+  }, [fetchAllUsers]);
 
   const onSubmit = (values) => {
-    let allUsers = _.keyBy([...doctors, ...patients], 'id')
+    let allUsers = _.keyBy([...doctors, ...patients], "id");
 
     // If userId does not match
     if (!(values.userId in allUsers)) {
@@ -36,12 +36,14 @@ const Login = ({ patients, doctors, signIn, fetchAllUsers, authDoctor }) => {
 
     // If user is in doctor table, set isDoctor to true
     if (_.find(doctors, { id: values.userId })) {
-      authDoctor()
+      authDoctor();
     }
 
-    signIn(values.userId, values.userName)
-    toast("Login Success!",
-      { position: toast.POSITION.TOP_CENTER, autoClose: 500 });
+    signIn(values.userId, values.userName);
+    toast("Login Success!", {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 500,
+    });
     navigate("/main");
   };
 
@@ -54,7 +56,6 @@ const Login = ({ patients, doctors, signIn, fetchAllUsers, authDoctor }) => {
       errors.userName = "Required";
     }
     return errors;
-
   };
   return (
     <div id="login-container" className="ui middle aligned center aligned grid">
@@ -88,15 +89,9 @@ const Login = ({ patients, doctors, signIn, fetchAllUsers, authDoctor }) => {
                   <Field name="userName">
                     {({ input, meta }) => (
                       <>
-                        <input
-                          {...input}
-                          type="text"
-                          placeholder="Name"
-                        />
+                        <input {...input} type="text" placeholder="Name" />
                         {meta.error && meta.touched && (
-                          <div className="ui error message">
-                            {meta.error}
-                          </div>
+                          <div className="ui error message">{meta.error}</div>
                         )}
                       </>
                     )}
@@ -123,15 +118,12 @@ const Login = ({ patients, doctors, signIn, fetchAllUsers, authDoctor }) => {
 const mapStateToProps = (state) => {
   return {
     patients: state.patients,
-    doctors: state.doctors
-  }
-}
+    doctors: state.doctors,
+  };
+};
 
-
-export default connect(
-  mapStateToProps, {
+export default connect(mapStateToProps, {
   signIn,
   fetchAllUsers,
-  authDoctor
-}
-)(Login);
+  authDoctor,
+})(Login);

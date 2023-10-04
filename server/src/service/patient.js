@@ -6,7 +6,7 @@ class PatientService {
   }
 
   getPatientById(patient_details) {
-    const { id } = patient_details
+    const { id } = patient_details;
     return patientDAO.getPatientById(id);
   }
 }

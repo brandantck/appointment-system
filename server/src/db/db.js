@@ -1,18 +1,15 @@
-const knex = require("knex")
+const knex = require("knex");
 
-const { setTypeParser, builtins } = require('pg').types;
+const { setTypeParser, builtins } = require("pg").types;
 
-const typesToReset = [
-  builtins.DATE,
-  builtins.TIME,
-];
+const typesToReset = [builtins.DATE, builtins.TIME];
 // Return types as plain str
 function resetPgDateParsers() {
   for (const pgType of typesToReset) {
-    setTypeParser(pgType, val => String(val));
+    setTypeParser(pgType, (val) => String(val));
   }
 }
-resetPgDateParsers()
+resetPgDateParsers();
 
 module.exports = knex({
   client: "postgres",
@@ -21,6 +18,6 @@ module.exports = knex({
     host: process.env.PG_HOST,
     database: process.env.POSTGRES_DB,
     password: process.env.POSTGRES_PASSWORD,
-    port: process.env.PG_PORT
-  }
-})
+    port: process.env.PG_PORT,
+  },
+});

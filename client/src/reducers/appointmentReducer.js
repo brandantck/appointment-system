@@ -6,29 +6,29 @@ import {
 
 const INITIAL_STATE = {
   appointments: [],
-  availableTimeslots: []
-}
+  availableTimeslots: [],
+};
 
 const appointmentReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case FETCH_APPOINTMENTS:
       return {
         ...state,
-        appointments: action.payload
-      }
+        appointments: action.payload,
+      };
     case FETCH_AVAILABLE_TIMESLOTS:
       return {
         ...state,
-        availableTimeslots: action.payload
-      }
+        availableTimeslots: action.payload,
+      };
     case CANCEL_APPOINTMENT:
       return {
         ...state,
-        appointments: state.appointments.filter(e => e.id !== action.payload)
-      }
+        appointments: state.appointments.filter((e) => e.id !== action.payload),
+      };
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default appointmentReducer
+export default appointmentReducer;

@@ -6,7 +6,7 @@ class DoctorService {
   }
 
   getDoctorById(doctor_details) {
-    const { id } = doctor_details
+    const { id } = doctor_details;
     return doctorDAO.getDoctorById(id);
   }
 }

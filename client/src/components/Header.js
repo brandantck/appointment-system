@@ -1,7 +1,5 @@
 import React from "react";
-import {
-  Outlet,
-} from 'react-router-dom';
+import { Outlet } from "react-router-dom";
 import { connect } from "react-redux";
 import LogoutButton from "./Auth/LogoutButton";
 
@@ -11,7 +9,9 @@ const Header = ({ userName }) => {
       <div className="ui grid">
         <div className="row">
           <div className="column">
-            <h1 className="ui center aligned header teal">Appointment Booking System</h1>
+            <h1 className="ui center aligned header teal">
+              Appointment Booking System
+            </h1>
           </div>
         </div>
 
@@ -26,17 +26,16 @@ const Header = ({ userName }) => {
             <div className="ui divider"></div>
           </div>
         </div>
-
       </div>
       <Outlet />
     </>
-  )
-}
+  );
+};
 
 const mapStateToProps = (state) => {
   return {
-    userName: state.auth.userName
-  }
-}
+    userName: state.auth.userName,
+  };
+};
 
 export default connect(mapStateToProps)(Header);

@@ -1,14 +1,14 @@
-const db = require('../db/db')
+const db = require("../db/db");
 
 class DoctorDAO {
   async getAllDoctors() {
-    const response = await db('doctors').select("*")
+    const response = await db("doctors").select("*");
     return response;
   }
 
   async getDoctorById(id) {
-    const response = await db('doctors').where({ id: id })
-    return response
+    const response = await db("doctors").where({ id: id });
+    return response;
   }
 }
 
