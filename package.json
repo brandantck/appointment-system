@@ -1,0 +1,18 @@
+{
+  "name": "appointment-system",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "NODE_ENV=dev docker compose build",
+    "start": "NODE_ENV=dev docker compose up --build",
+    "build:prod": "NODE_ENV=prod docker compose build ",
+    "start:prod": "NODE_ENV=prod docker compose up --build",
+    "format": "prettier --write \"client/**/*.ts\" \"server/**/*.ts\""
+  },
+  "workspaces": {
+    "packages": [
+      "client",
+      "server"
+    ]
+  }
+}
